@@ -78,7 +78,13 @@ function sort(data, field) {
       return parseFloat(a[field]) - parseFloat(b[field])
     })
   } else {
-    return data.sort();
+    return data.sort(function(a,b){
+      if ( a[field] < b[field] )
+        return -1;
+      if ( a[field] > b[field] )
+        return 1;
+      return 0;
+    });
   }
 }
 
