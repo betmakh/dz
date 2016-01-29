@@ -98,7 +98,7 @@ function renderTable(data, id, header) {
   if (header) {
     // create header element
     var caption = document.createElement('caption');
-    table.textContent = header;
+    caption.textContent = header;
     // appent header element to the table
     table.appendChild(caption)
   }
