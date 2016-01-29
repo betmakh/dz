@@ -73,11 +73,14 @@ var data = [{
 }];
 
 function sort(data, field) {
+  //detect sort (numbers or strings)
   if (parseFloat(data[0][field])) {
+    // number sort
     return data.sort(function(a, b) {
       return parseFloat(a[field]) - parseFloat(b[field])
     })
   } else {
+    // string sort
     return data.sort(function(a,b){
       if ( a[field] < b[field] )
         return -1;
@@ -109,6 +112,7 @@ function renderTable(data, id, header) {
     headerRow.appendChild(headerCell);
     // closure for event handling
     (function(name) {
+      // event handler for sort on click
         headerCell.onclick = function(e) {
           sort(data, name);
           renderTable(data, id, header);
@@ -116,31 +120,34 @@ function renderTable(data, id, header) {
       })(i);
     }
 
-
+    // loop for table rows
     data.forEach(function(rowData) {
       // create table row element
       var rowEl = document.createElement('tr');
 
-
+      // loop for table cells
       for (var i in rowData) {
         var cellEl = document.createElement('td');
-
+        // detect image
         if (i == 'image') {
           var img = document.createElement('img');
           img.src = rowData[i];
           cellEl.appendChild(img);
-          rowEl.appendChild(cellEl);
         } else {
           cellEl.textContent = rowData[i];
-          rowEl.appendChild(cellEl);
         }
+        // append current table cell to the current row
+        rowEl.appendChild(cellEl);
       }
-
+      // append current row to the table
       table.appendChild(rowEl);
     });
 
+    // clear dom element
     document.getElementById(id).innerHTML = '';
+    // insert table into page 
     document.getElementById(id).appendChild(table);
+    // return rendered table
     return table;
 
   }
